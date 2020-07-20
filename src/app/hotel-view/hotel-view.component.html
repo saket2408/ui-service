@@ -1,0 +1,275 @@
+<div id="page">
+    <div class="topnav">
+        <a class="logo_img" routerLink="/"><img src="../../assets/images/logo.png"></a>
+        <a *ngIf='!flag1' #signInModal data-toggle="modal" data-target="#signInModal">Sign In</a>
+		<a *ngIf='flag1' (click)='signout()'>Sign Out</a>
+		<a *ngIf='flag1' href="#"><img src="{{user[0].url}}" height="25px" width="25px"
+				style="border-radius: 15px;">&nbsp; {{user[0].name}}</a>
+        <a routerLink="/contact">Contact</a>
+        <a routerLink="/about">About</a>
+        <a (click)="planner()">Try Trip Planner</a>
+        <a routerLink="/">Home</a>
+    </div>
+    <div class="modal fade" id='signInModal'>
+		<div class="modal-dialog">
+			<div class="modal-content" style="background-color: white;">
+				<button type="button" class="close" #closeModal data-dismiss="modal">&times;</button>
+				<h2>Login to yatraGuru</h2>
+				<button class="btn btn-default" (click)="signInWithGoogle()">Login With
+					<img src="http://transformations-spafitness.com/wp-content/uploads/2013/11/google-logo-icon-PNG-Transparent-Background-1-300x300.png"
+						height="25px" width="25px">
+				</button>
+				<button class="btn btn-default" (click)="signInWithFB()">Login With
+					<img src="../../assets/images/fb.png"
+						height="25px" width="25px">
+				</button>
+			</div>
+		</div>
+	</div>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="../../assets/images/cover-img-4.jpg">
+                <div class="carousel-caption">
+                    <h1>Find Hotels</h1>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="colorlib-reservation">
+        <div class="row">
+            <div class="search-wrap">
+                <div class="tab-content">
+                    <div id="flight" class="tab-pane fade in active">
+                        <form #hotelForm="ngForm" (submit)="actionHotel(hotelForm.value)" ngNativeValidate
+                            autocomplete="off" class="colorlib-form">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="booknow">
+                                        <h2>Search Now</h2>
+                                        <span>Best Hotels</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="origin">Where:</label>
+                                    <div class="form-field">
+                                        <input type="text" id="origin" class="form-control" list="city"
+                                            (keyup)='cityChange(hotelForm.value.city)' placeholder="Search Location"
+                                            name="city" [(ngModel)]="hotelObj.city" required>
+                                        <datalist id="city">
+                                            <option *ngFor="let air of city" value="{{air}}"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="date">Check-in Date:</label>
+                                    <div class="form-field">
+                                        <input type="date" id="date" class="form-control" 
+                                            name="inDate" [(ngModel)]="hotelObj.inDate" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="date1">Check-out Date:</label>
+                                    <div class="form-field">
+                                        <input type="date" id="date1" class="form-control" 
+                                            name="outDate" [(ngModel)]="hotelObj.outDate" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="submit" name="submit" id="submit" value="Find Hotels"
+                                        class="btn btn-primary btn-block">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="colorlib-wrap" style="margin-top: -100px;">
+    <div class="container">
+        <div class="row">
+            <button id="openModal" #openModal hidden="true" data-toggle="modal" data-target="#weatherModal"></button>
+            <div *ngIf="!flag; else notShow">
+                <h1>
+                    Loading please wait..
+                </h1>
+            </div>
+            <ng-template #notShow>
+                <div class="row jumbotron" id="divWeather" style="width: 105%; height: 150px; background-color: #96b4e4"
+                    (click)="myfunc()">
+                    <div class="col-md-4">
+                        <h3><b>{{weatherData[0].location.name}}, {{weatherData[0].location.region}}</b></h3>
+                        <h3 style="margin-top: -15px;">{{weatherData[0].current.weather_descriptions}}</h3>
+
+                    </div>
+                    <div class="col-md-4">
+                        <img src="{{weatherData[0].current.weather_icons}}" width="80px" height="80px"
+                            style="display: inline; margin-top:-30px;">
+                        <h1 style="display: inline;">{{weatherData[0].current.temperature}} &deg;C </h1>
+                    </div>
+                    <div class="col-md-4" style="font-size: larger;margin-top: -10px;">
+                        Precipitation : {{weatherData[0].current.precip * 10}} % <br>
+                        Humidity : {{weatherData[0].current.humidity}} % <br>
+                        Wind Speed : {{weatherData[0].current.wind_speed}} Km/h<br>
+
+                    </div>
+                </div>
+                <div class="modal fade" id="weatherModal" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <h3 style="margin:0 auto"><b>YOUR SAFETY IS OUR PRIORITY</b></h3>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="modal-body" style="background-color: white; height: 500px;">
+                            {{weatherData[2].message}}<br><br>
+                            <h3><b>Safety Measures: </b></h3>
+                            <ul>
+                                <li *ngFor="let i of weatherData[3].tips">
+                                    {{i}}
+                                </li>
+                            </ul>
+                            <button class="close btn btn-primary" data-dismiss="modal"
+                                style="width: 90px;font-size: 10px;color: black;">Close</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="wrap-division" *ngIf="hotelData.hotels?.length > 0">
+                            <div class="col-md-12 col-sm-12 animate-box" *ngFor="let item of hotelData.hotels; index as i">
+                                <a href="https://www.booking.com{{item.url}}" target="_blank"><div class="row" style="border: 1px solid black; margin-bottom: 15px; padding: 5px;">
+                                    <div class="col-md-4">
+                                      <img src="{{item.hotel_image}}" alt="No Preview Available" width="200px" height="200px" style="border: 0.5px solid lightgrey;" >
+                                    </div>
+                                    <div class="col-md-8" style="color: black;">
+                                        <div style="float: right;">
+                                            <h5 style="color: #5bc0de;"> {{item.reviews}} <span class="label label-primary">{{item.ratings}}</span></h5>
+                                            <h5 style="margin-top: -15px;"> {{item.amount_reviews}} </h5>      
+                                        </div>
+                                        <h3 style="color: #f0ad4e;">{{item.hotel_name}}</h3>
+                                        <h4 style="color: darkblue; margin-top: -15px; ">{{item.city.substring(0, item.city.length - 11)}}</h4>
+                                        <h6 style="margin-top: -15px;">{{item.distance}}</h6> 
+                                        {{item.description}}
+                                    </div>
+                                </div></a>
+                            </div>
+                        </div>
+
+                        <div class="wrap-division" *ngIf="hotelData.hotels == null">
+                            <h1>Sorry! no hotels found matching your location. Try using different locations.
+                            </h1>
+                        </div>
+
+                    </div>
+
+                    <!-- SIDEBAR-->
+                    <div class="col-md-4">
+                        <div class="side animate-box row jumbotron"
+                            style=" width: 400px; height: 250px; padding: 10px;">
+                            <h2 style="margin: 0 auto; color: rgba(0, 0, 0, 0.7);">COVID-19 Statistics</h2>
+                            <div class="col-md-4">
+                                <h3 style="color:#ff9900; height: 50px;font-size: 20px;">
+                                    {{covidData[0].world.Country}}<br></h3>
+                                <span style="color:#00BBF0">Total Cases: </span>
+                                <br>{{covidData[0].world.TotalCases}}<br>
+                                <span style="color:#00BBF0"> Recovered: </span><br>
+                                {{covidData[0].world.TotalRecovered}}<br>
+                                <span style="color:#00BBF0">Deaths: </span> <br>{{covidData[0].world.TotalDeaths}}
+                            </div>
+                            <div class="col-md-4">
+                                <h3 style="color:#ff9900;height: 50px;font-size: 20px;">
+                                    {{covidData[1].country.Country}}<br></h3>
+                                <span style="color:#00BBF0">Total Cases: </span>
+                                <br>{{covidData[1].country.TotalCases}}<br>
+                                <span style="color:#00BBF0"> Recovered: </span><br>
+                                {{covidData[1].country.TotalRecovered}}<br>
+                                <span style="color:#00BBF0">Deaths: </span> <br>{{covidData[1].country.TotalDeaths}}
+                            </div>
+                            <div class="col-md-4" *ngIf="covidData?.length > 2">
+                                <h3 style="color:#ff9900;height: 50px;font-size: 20px;">{{covidData[2].state.state}}
+                                </h3>
+                                <span style="color:#00BBF0">Total Cases: </span><br>
+                                {{covidData[2].state.confirmed}}<br>
+                                <span style="color:#00BBF0"> Recovered: </span><br> {{covidData[2].state.recovered}}<br>
+                                <span style="color:#00BBF0">Deaths: </span> <br>{{covidData[2].state.deaths}}
+                            </div>
+                        </div>
+                        <div class="side animate-box">
+                            <iframe width="400" height="400" frameborder="0" style="border:0" [src]="mapUrl | safePipe"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>
+<footer id="colorlib-footer" role="contentinfo">
+    <div class="container">
+        <div class="row row-pb-md">
+            <div class="col-md-3 colorlib-widget">
+                <h4>YatraGuru</h4>
+                <p>Your yatra buddy. Get complete information for your tour with us. Plan your trip
+                    without
+                    any
+                    difficulty.</p>
+                <ul class="colorlib-social-icons">
+                    <li><a href="#"><i class="icon-twitter"></i></a></li>
+                    <li><a href="#"><i class="icon-facebook"></i></a></li>
+                    <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                    <li><a href="#"><i class="icon-dribbble"></i></a></li>
+                </ul>
+            </div>
+            <div class="col-md-2 colorlib-widget">
+                <h4>Search Now</h4>
+                <ul class="colorlib-footer-links">
+                    <li><a href="#">Flights</a></li>
+                    <li><a href="#">Hotels</a></li>
+                    <li><a href="#">Trains</a></li>
+                    <li><a href="#">Restaurants</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2">
+                <h4>Special features</h4>
+                <ul class="colorlib-footer-links">
+                    <li><a href="#">Weather based suggestions</a></li>
+                    <li><a href="#">Give daywise plan for a location</a></li>
+                    <li><a href="#">Trip planner to give you places to visit of a particular
+                            location.</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-3 col-md-push-1">
+                <h4>Contact Information</h4>
+                <ul class="colorlib-footer-links">
+                    <li>IBM India Pvt Ltd, Ozone 2, SP Infocity <br> Fursungi , Pune , Maharashtra ,
+                        IN
+                        412308
+                    </li>
+                    <li><a href="tel://1234567920">+ 1235 2355 98</a></li>
+                    <li><a href="mailto:info@yoursite.com">yatraGuru.service@gmail.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy;
+                <script>document.write(new Date().getFullYear());</script> All rights reserved |
+                YatraGuru
+            </div>
+        </div>
+    </div>
+</footer>

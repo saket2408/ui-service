@@ -1,0 +1,161 @@
+<div id="page">
+    <div class="topnav">
+        <a class="logo_img" routerLink="/"><img src="../../assets/images/logo.png"></a>
+        <a *ngIf='!flag1' data-toggle="modal" #signInModal data-target="#signInModal">Sign In</a>
+        <a *ngIf='flag1' (click)='signout()'>Sign Out</a>
+        <a *ngIf='flag1' href="#"><img src="{{user[0].url}}" height="25px" width="25px"
+                style="border-radius: 15px;">&nbsp; {{user[0].name}}</a>
+        <a class="active" href="#">Contact</a>
+        <a href="#" routerLink="/about">About</a>
+        <a (click)="planner()">Try Trip Planner</a>
+        <a routerLink="/">Home</a>
+    </div>
+    <div class="modal fade" id='signInModal'>
+        <div class="modal-dialog">
+            <div class="modal-content" style="background-color: white;">
+                <button type="button" class="close" #closeModal data-dismiss="modal">&times;</button>
+                <h2>Login to yatraGuru</h2>
+                <button class="btn btn-default" (click)="signInWithGoogle()">Login With
+                    <img src="http://transformations-spafitness.com/wp-content/uploads/2013/11/google-logo-icon-PNG-Transparent-Background-1-300x300.png"
+                        height="25px" width="25px">
+                </button>
+                <button class="btn btn-default" (click)="signInWithFB()">Login With
+                    <img src="../../assets/images/fb.png" height="25px" width="25px">
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="../../assets/images/cover-img-3.jpg">
+                <div class="carousel-caption">
+                    <h1>Contact Us</h1>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="colorlib-contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 animate-box">
+                    <h3>Get In Touch</h3>
+                    <div class="row form-group">
+                        <div class="col-md-6 padding-bottom">
+                            <label for="fname">First Name</label>
+                            <input type="text" id="fname" class="form-control" placeholder="Your firstname">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lname">Last Name</label>
+                            <input type="text" id="lname" class="form-control" placeholder="Your lastname">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-12">
+                            <label for="email">Email</label>
+                            <input type="text" id="email" class="form-control" placeholder="Your email address">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-12">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" class="form-control"
+                                placeholder="Your subject of this message">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-12">
+                            <label for="message">Message</label>
+                            <textarea name="message" id="message" cols="30" rows="10" class="form-control"
+                                placeholder="Say something about us"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group text-center">
+                        <input type="submit" value="Send Message" class="btn btn-primary">
+                    </div>
+
+                </div>
+                <div class="col-md-10 col-md-offset-1 animate-box">
+                    <h3>Contact Information</h3>
+                    <div class="row contact-info-wrap">
+                        <div class="col-md-4">
+                            <p><span><i class="icon-location"></i></span> IBM India Pvt Ltd, Ozone 2, SP Infocity <br>
+                                Fursungi , Pune , Maharashtra , IN
+                                412308</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p><span><i class="icon-phone3"></i></span> <a href="tel://1234567920">+ 1235 2355 98</a>
+                            </p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><span><i class="icon-paperplane"></i></span> <a
+                                    href="mailto:info@yoursite.com">yatraGuru.service@gmail.com</a></p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="colorlib-footer" role="contentinfo">
+        <div class="container">
+            <div class="row row-pb-md">
+                <div class="col-md-3 colorlib-widget">
+                    <h4>YatraGuru</h4>
+                    <p>Your yatra buddy. Get complete information for your tour with us. Plan your trip without
+                        any
+                        difficulty.</p>
+                    <ul class="colorlib-social-icons">
+                        <li><a href="#"><i class="icon-twitter"></i></a></li>
+                        <li><a href="#"><i class="icon-facebook"></i></a></li>
+                        <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                        <li><a href="#"><i class="icon-dribbble"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 colorlib-widget">
+                    <h4>Search Now</h4>
+                    <ul class="colorlib-footer-links">
+                        <li><a href="#">Flights</a></li>
+                        <li><a href="#">Hotels</a></li>
+                        <li><a href="#">Trains</a></li>
+                        <li><a href="#">Restaurants</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <h4>Special features</h4>
+                    <ul class="colorlib-footer-links">
+                        <li><a href="#">Weather based suggestions</a></li>
+                        <li><a href="#">Give daywise plan for a location</a></li>
+                        <li><a href="#">Trip planner to give you places to visit of a particular location.</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3 col-md-push-1">
+                    <h4>Contact Information</h4>
+                    <ul class="colorlib-footer-links">
+                        <li>IBM India Pvt Ltd, Ozone 2, SP Infocity <br> Fursungi , Pune , Maharashtra , IN
+                            412308
+                        </li>
+                        <li><a href="tel://1234567920">+ 1235 2355 98</a></li>
+                        <li><a href="mailto:info@yoursite.com">yatraGuru.service@gmail.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;
+                    <script>document.write(new Date().getFullYear());</script> All rights reserved | YatraGuru
+                </div>
+            </div>
+        </div>
+    </footer>

@@ -1,0 +1,293 @@
+<div id="page">
+    <div class="topnav">
+        <a class="logo_img" routerLink="/"><img src="../../assets/images/logo.png"></a>
+        <a (click)='signout()'>Sign Out</a>
+        <a href="#"><img src="{{user[0].url}}" height="25px" width="25px" style="border-radius: 15px;">&nbsp;
+            {{user[0].name}}</a>
+        <a routerLink="/contact">Contact</a>
+        <a routerLink="/about">About</a>
+        <a routerLink="/planner">Trip Planner</a>
+        <a routerLink="/">Home</a>
+
+
+    </div>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="../../assets/images/cover-img-2.jpg">
+                <div class="carousel-caption">
+                    <h1 style="font-size: xxx-large; font-weight: inherit;">{{plannerObj.days}} days in
+                        <br>{{plannerObj.city}}</h1>
+                    <a routerLink="/planner" class="btn btn-primary">Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="colorlib-wrap" style="margin-top: -100px;">
+    <div class="container">
+        <div class="row">
+            <button id="openModal" #openModal hidden="true" data-toggle="modal" data-target="#weatherModal"></button>
+            <div *ngIf="!flag; else notShow">
+                <h1>
+                    <b>Building Package, </b>please wait for sometime.....
+                </h1>
+            </div>
+            <ng-template #notShow>
+                <div class="row jumbotron" id="divWeather" style="width: 105%; height: 150px; background-color: #96b4e4"
+                    (click)="myfunc()">
+                    <div class="col-md-4">
+                        <h3><b>{{weatherData[0].location.name}}, {{weatherData[0].location.region}}</b></h3>
+                        <h3 style="margin-top: -15px;">{{weatherData[0].current.weather_descriptions}}</h3>
+
+                    </div>
+                    <div class="col-md-4">
+                        <img src="{{weatherData[0].current.weather_icons}}" width="80px" height="80px"
+                            style="display: inline; margin-top:-30px;">
+                        <h1 style="display: inline;">{{weatherData[0].current.temperature}} &deg;C </h1>
+                    </div>
+                    <div class="col-md-4" style="font-size: larger;margin-top: -10px;">
+                        Precipitation : {{weatherData[0].current.precip * 10}} % <br>
+                        Humidity : {{weatherData[0].current.humidity}} % <br>
+                        Wind Speed : {{weatherData[0].current.wind_speed}} Km/h<br>
+
+                    </div>
+                </div>
+                <div class="modal fade" id="weatherModal" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <h3 style="margin:0 auto"><b>YOUR SAFETY IS OUR PRIORITY</b></h3>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="modal-body" style="background-color: white; height: 500px;">
+                            {{weatherData[2].message}}<br><br>
+                            <h3><b>Safety Measures: </b></h3>
+                            <ul>
+                                <li *ngFor="let i of weatherData[3].tips">
+                                    {{i}}
+                                </li>
+                            </ul>
+                            <button class="close btn btn-primary" data-dismiss="modal"
+                                style="width: 90px;font-size: 10px;color: black;">Close</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" style="text-align: center; color: black;"
+                                    href="#daybyday"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Timeline</a>
+                            </li>
+                            <li><a data-toggle="tab" style="text-align: center; color: black;" href="#stay"><i
+                                        class="flaticon-resort"></i>&nbsp;Stay</a></li>
+                            <li><a data-toggle="tab" style="text-align: center; color: black;" href="#food"><i
+                                        class="fa fa-cutlery" aria-hidden="true"></i>&nbsp;Food</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="daybyday" class="col-md-12 tab-pane fade in active">
+                                <div class="wrap-division" *ngIf="daywiseData?.length > 0">
+                                    <div class="col-md-12 col-sm-12 animate-box"
+                                        *ngFor="let item of daywiseData; index as i">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h1>Day {{i+1}}</h1>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="row" *ngFor="let items of item;"
+                                                    style="border: 1px solid black; margin: 15px; padding: 5px;">
+                                                    <div class="col-md-12" style="color: black;" >
+                                                        <img src="{{items.images[0].source_url}}" alt="No Preview Available"
+                                                            width="250px" height="250px"
+                                                            style="border: 0.5px solid lightgrey; float: left; margin: 20px;">
+                                                        <h2 style="color: #f0ad4e; margin-bottom: -1px; ">{{items.name}}</h2>
+                                                        <span  style="color: rgb(163, 162, 162);">{{items.tag_labels[0]}} | {{items.tag_labels[1]}} | {{items.tag_labels[2]}}</span><br>
+                                                        <h5 class="container1" [class.show]="show">{{items.intro}}</h5>
+                                                        <button (click)="show = !show">{{ show ? 'Show less': 'Show More' }}</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="wrap-division" *ngIf="daywiseData?.length == 0">
+                                    <h1>Sorry! no places to explore found matching your location. Try using different
+                                        locations.
+                                    </h1>
+                                </div>
+                            </div>
+                            <div id="stay" class="col-md-12 tab-pane fade">
+                                <div class="wrap-division" *ngIf="hotelData.hotels?.length > 0">
+                                    <div class="col-md-12 col-sm-12 animate-box"
+                                        *ngFor="let item of hotelData.hotels; index as i">
+                                        <a href="https://www.booking.com{{item.url}}" target="_blank">
+                                            <div class="row"
+                                                style="border: 1px solid black; margin-bottom: 15px; padding: 5px;">
+                                                <div class="col-md-4">
+                                                    <img src="{{item.hotel_image}}" alt="No Preview Available"
+                                                        width="200px" height="200px"
+                                                        style="border: 0.5px solid lightgrey;">
+                                                </div>
+                                                <div class="col-md-8" style="color: black;">
+                                                    <div style="float: right;">
+                                                        <h5 style="color: #5bc0de;"> {{item.reviews}} <span
+                                                                class="label label-primary">{{item.ratings}}</span></h5>
+                                                        <h5 style="margin-top: -15px;"> {{item.amount_reviews}} </h5>
+                                                    </div>
+                                                    <h3 style="color: #f0ad4e;">{{item.hotel_name}}</h3>
+                                                    <h4 style="color: darkblue; margin-top: -15px; ">
+                                                        {{item.city.substring(0, item.city.length - 11)}}</h4>
+                                                    <h6 style="margin-top: -15px;">{{item.distance}}</h6>
+                                                    {{item.description}}
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="wrap-division" *ngIf="hotelData.hotels == null">
+                                    <h1>Sorry! no hotels found matching your location. Try using different locations.
+                                    </h1>
+                                </div>
+                            </div>
+                            <div id="food" class="col-md-12 tab-pane fade">
+                                <div class="wrap-division" *ngIf="resData.restaurants?.length > 0">
+                                    <div class="col-md-12 col-sm-12 animate-box"
+                                        *ngFor="let item of resData.restaurants">
+                                        <a href="{{item.url}}" target="_blank">
+                                            <div class="row"
+                                                style="border: 1px solid black; margin-bottom: 15px; padding: 5px;">
+                                                <div class="col-md-12" style="color: black;">
+                                                    <div style="float: right;">
+                                                        <h5 style="color: #5bc0de;"> {{item.user_rating.rating_text}}
+                                                            <span
+                                                                class="label label-primary">{{item.user_rating.aggregate_rating}}</span>
+                                                        </h5>
+                                                        <h5 style="margin-top: -15px;"> {{item.user_rating.votes}}
+                                                            reviews </h5>
+                                                    </div>
+                                                    <h5 style="color: rgb(163, 162, 162);">{{item.establishment[0]}}
+                                                    </h5>
+                                                    <h3 style="color: #f0ad4e; margin-top: -15px; ">{{item.name}}</h3>
+                                                    <h4 style="color: darkblue; margin-top: -15px; ">
+                                                        {{item.location.locality}}</h4>
+                                                    <h6 style="margin-top: -15px;">{{item.location.address}}</h6>
+                                                    <b> CUISINES:</b> {{item.cuisines}} &nbsp; | &nbsp;
+                                                    <b> COST FOR TWO:</b> {{item.currency}}
+                                                    {{item.average_cost_for_two}}&nbsp; | &nbsp;
+                                                    <b> HOURS:</b> {{item.timings}}
+                                                </div>
+
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="wrap-division" *ngIf="resData == 'We do not deliver here'">
+                                    <h1>Sorry! no restaurants found matching your location. Try using different
+                                        locations.
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SIDEBAR-->
+                    <div class="col-md-4">
+                        <div class="side animate-box row jumbotron"
+                            style=" width: 400px; height: 250px; padding: 10px;">
+                            <h2 style="margin: 0 auto; color: rgba(0, 0, 0, 0.7);">COVID-19 Statistics</h2>
+                            <div class="col-md-4">
+                                <h3 style="color:#ff9900; height: 50px;font-size: 20px;">
+                                    {{covidData[0].world.Country}}<br></h3>
+                                <span style="color:#00BBF0">Total Cases: </span>
+                                <br>{{covidData[0].world.TotalCases}}<br>
+                                <span style="color:#00BBF0"> Recovered: </span><br>
+                                {{covidData[0].world.TotalRecovered}}<br>
+                                <span style="color:#00BBF0">Deaths: </span> <br>{{covidData[0].world.TotalDeaths}}
+                            </div>
+                            <div class="col-md-4">
+                                <h3 style="color:#ff9900;height: 50px;font-size: 20px;">
+                                    {{covidData[1].country.Country}}<br></h3>
+                                <span style="color:#00BBF0">Total Cases: </span>
+                                <br>{{covidData[1].country.TotalCases}}<br>
+                                <span style="color:#00BBF0"> Recovered: </span><br>
+                                {{covidData[1].country.TotalRecovered}}<br>
+                                <span style="color:#00BBF0">Deaths: </span> <br>{{covidData[1].country.TotalDeaths}}
+                            </div>
+                            <div class="col-md-4" *ngIf="covidData?.length > 2">
+                                <h3 style="color:#ff9900;height: 50px;font-size: 20px;">{{covidData[2].state.state}}
+                                </h3>
+                                <span style="color:#00BBF0">Total Cases: </span><br>
+                                {{covidData[2].state.confirmed}}<br>
+                                <span style="color:#00BBF0"> Recovered: </span><br> {{covidData[2].state.recovered}}<br>
+                                <span style="color:#00BBF0">Deaths: </span> <br>{{covidData[2].state.deaths}}
+                            </div>
+                        </div>
+                        <div class="side animate-box">
+                            <iframe width="400" height="400" frameborder="0" style="border:0" [src]="mapUrl | safePipe"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>
+
+<footer id="colorlib-footer" role="contentinfo">
+    <div class="container">
+        <div class="row row-pb-md">
+            <div class="col-md-3 colorlib-widget">
+                <h4>YatraGuru</h4>
+                <p>Your yatra buddy. Get complete information for your tour with us. Plan your trip without any
+                    difficulty.</p>
+                <ul class="colorlib-social-icons">
+                    <li><a href="#"><i class="icon-twitter"></i></a></li>
+                    <li><a href="#"><i class="icon-facebook"></i></a></li>
+                    <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                    <li><a href="#"><i class="icon-dribbble"></i></a></li>
+                </ul>
+            </div>
+            <div class="col-md-2 colorlib-widget">
+                <h4>Search Now</h4>
+                <ul class="colorlib-footer-links">
+                    <li><a href="#">Flights</a></li>
+                    <li><a href="#">Hotels</a></li>
+                    <li><a href="#">Trains</a></li>
+                    <li><a href="#">Restaurants</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2">
+                <h4>Special features</h4>
+                <ul class="colorlib-footer-links">
+                    <li><a href="#">Weather based suggestions</a></li>
+                    <li><a href="#">Give daywise plan for a location</a></li>
+                    <li><a href="#">Trip planner to give you places to visit of a particular location.</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-3 col-md-push-1">
+                <h4>Contact Information</h4>
+                <ul class="colorlib-footer-links">
+                    <li>IBM India Pvt Ltd, Ozone 2, SP Infocity <br> Fursungi , Pune , Maharashtra , IN 412308</li>
+                    <li><a href="tel://1234567920">+ 1235 2355 98</a></li>
+                    <li><a href="mailto:info@yoursite.com">yatraGuru.service@gmail.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy;
+                <script>document.write(new Date().getFullYear());</script> All rights reserved | YatraGuru </div>
+        </div>
+    </div>
+</footer>

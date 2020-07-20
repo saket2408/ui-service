@@ -1,0 +1,233 @@
+<div id="page">
+    <div class="topnav">
+        <a class="logo_img" routerLink="/"><img src="../../assets/images/logo.png"></a>
+        <a (click)='signout()'>Sign Out</a>
+        <a href="#"><img src="{{user[0].url}}" height="25px" width="25px" style="border-radius: 15px;">&nbsp;
+            {{user[0].name}}</a>
+        <a routerLink="/contact">Contact</a>
+        <a routerLink="/about">About</a>
+        <a routerLink="/">Home</a>
+        <button type="button" name="submit" title="click to speak" (click)='dictate()' style="float: right;border-radius: 20px;font-size: x-large;color: white;width: 30px;height: 30px;background-color: transparent;border: 1px solid transparent;margin-left: 10px;margin-top: 6px;">
+            <i class='fa fa-microphone' aria-hidden='true'></i>
+        </button>
+        <form #searchForm="ngForm"  (submit)="actionSearch(searchForm.value)" ngNativeValidate autocomplete="off" >
+            <button type="submit" name="submit" #submitForm id="submit" style="float: right;border-radius: 20px;font-size: x-large;color: white;width: 30px;height: 30px;background-color: transparent;border: 1px solid transparent;margin-left: 10px;margin-top: 6px;">
+                <i class='fa fa-search' aria-hidden='true'></i>
+            </button>
+            <input type="text" id="search" class="form-control " placeholder="Type or speak your plan" name="search" title="Eg.&#013; 1. plan 2 days trip to pune &#013; 2. pune trip for 2 days &#013; 3. want to travel to Pune for 3 days. etc" ngModel required style="border: 2px solid white;border-radius: 25px;width: 240px;height: 30px;float: right;color: white;margin-top: 10px;">
+        </form>
+
+    </div>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="../../assets/images/img_bg_1.jpg">
+                <div class="carousel-caption">
+                    <h1 style="font-size: xxx-large; font-weight: inherit;">Travel more, Worry less</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="colorlib-reservation">
+        <div class="row">
+            <div class="search-wrap">
+                <div class="tab-content">
+                    <div id="flight" class="tab-pane fade in active">
+                        <form #plannerForm="ngForm" (submit)="actionPlanner(plannerForm.value)" ngNativeValidate
+                            autocomplete="off" class="colorlib-form">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="booknow">
+                                        <h2>Plan now</h2>
+                                        <span>Best Trip Experience</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="origin">Where:</label>
+                                    <div class="form-field">
+                                        <input type="text" id="origin" class="form-control" list="city"
+                                            (keyup)='cityChange(plannerForm.value.city)' placeholder="Search Location"
+                                            name="city" ngModel required>
+                                        <datalist id="city">
+                                            <option *ngFor="let air of city" value="{{air}}"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="date">Start Date:</label>
+                                    <div class="form-field">
+                                        <input type="date" id="date" class="form-control" name="startDate" ngModel
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="date1">End Date:</label>
+                                    <div class="form-field">
+                                        <input type="date" id="date1" class="form-control" name="endDate" ngModel
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="submit" name="submit" id="submit" value="Build Package"
+                                        class="btn btn-primary btn-block">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="colorlib-intro" class="intro-img" style="background-image: url(images/cover-img-1.jpg);"
+    data-stellar-background-ratio="0.5">
+    <div class="animate-box">
+        <img src="../../assets/images/corona.png" height="300px" style="margin-left: 10%;
+		margin-top: -5%;">
+    </div>
+
+</div>
+<div class="colorlib-tour colorlib-light-grey">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
+                <h2>Popular Destination</h2>
+                <p>“Never get so busy making a living that you forget to make a life.” </p>
+            </div>
+        </div>
+    </div>
+    <div class="tour-wrap">
+        <a href="#" class="tour-entry animate-box">
+            <div class="tour-img"
+                style="background-image: url(../../assets/images/paris.jfif); height:240px; width:300px">
+            </div>
+            <span class="desc">
+                <h2>Paris, France</h2>
+                <h6>Every day, the magnetic City of Light draws visitors who travel from around the globe to see
+                    iconic attractions. </h6>
+            </span>
+        </a>
+        <a href="#" class="tour-entry animate-box">
+            <div class="tour-img"
+                style="background-image: url(../../assets/images/rome.jfif); height:240px; width:300px">
+            </div>
+            <span class="desc">
+                <h2>Rome, Italy</h2>
+                <h6>When you visit the Eternal City, prepare to cross a few must-see attractions, including the
+                    Colosseum etc. </h6>
+            </span>
+        </a>
+        <a href="#" class="tour-entry animate-box">
+            <div class="tour-img"
+                style="background-image: url(../../assets/images/london.jfif); height:240px; width:300px">
+            </div>
+            <span class="desc">
+                <h2>London, England</h2>
+                <h6>The eclectic neighborhoods, which house a blend of historic landmarks and modern-day
+                    attractions. </h6>
+            </span>
+        </a>
+        <a href="#" class="tour-entry animate-box">
+            <div class="tour-img"
+                style="background-image: url(../../assets/images/sydney.jfif); height:240px; width:300px">
+            </div>
+            <span class="desc">
+                <h2>Sydney, Australia</h2>
+                <h6>Sydney offers more than just a dizzying array of landmarks (the Sydney Opera House, Sydney
+                    Harbour). </h6>
+            </span>
+        </a>
+        <a href="#" class="tour-entry animate-box">
+            <div class="tour-img"
+                style="background-image: url(../../assets/images/nyc.jfif); height:240px; width:300px">
+            </div>
+            <span class="desc">
+                <h2>New York City, USA</h2>
+                <h6>New York City hosts infinite urban adventures: You can wander through Central Park, tour the
+                    exhibits at the Met etc. </h6>
+            </span>
+        </a>
+        <a href="#" class="tour-entry animate-box">
+            <div class="tour-img" style="background-image: url(../../assets/images/goa.jpg); height:240px; width:300px">
+            </div>
+            <span class="desc">
+                <h2>Goa, India</h2>
+                <h6>Offering so many adventure sports, forts and Portuguese churches, countless beaches, luxury
+                    homestays in Goa, sea food. </h6>
+            </span>
+        </a>
+        <a href="#" class="tour-entry animate-box">
+            <div class="tour-img"
+                style="background-image: url(../../assets/images/shimla.jpg); height:240px; width:300px">
+            </div>
+            <span class="desc">
+                <h2>Shimla, India</h2>
+                <h6>Having served as the summer capital of the British era, Shimla in Himachal Pradesh is considered
+                    to be the most famous retreats of all the best travel destinations in India. </h6>
+            </span>
+        </a>
+        <a href="#" class="tour-entry animate-box">
+            <div class="tour-img"
+                style="background-image: url(../../assets/images/amsterdam.jfif); height:240px; width:300px">
+            </div>
+            <span class="desc">
+                <h2>Amsterdam, Netherlands</h2>
+                <h6>Famous museums, tulips, canal-lined streets, "coffee shops" and high-end boutiques await you in
+                    Amsterdam. </h6>
+            </span>
+        </a>
+
+    </div>
+</div>
+
+<footer id="colorlib-footer" role="contentinfo">
+    <div class="container">
+        <div class="row row-pb-md">
+            <div class="col-md-3 colorlib-widget">
+                <h4>YatraGuru</h4>
+                <p>Your yatra buddy. Get complete information for your tour with us. Plan your trip without any
+                    difficulty.</p>
+                <ul class="colorlib-social-icons">
+                    <li><a href="#"><i class="icon-twitter"></i></a></li>
+                    <li><a href="#"><i class="icon-facebook"></i></a></li>
+                    <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                    <li><a href="#"><i class="icon-dribbble"></i></a></li>
+                </ul>
+            </div>
+            <div class="col-md-2 colorlib-widget">
+                <h4>Search Now</h4>
+                <ul class="colorlib-footer-links">
+                    <li><a href="#">Flights</a></li>
+                    <li><a href="#">Hotels</a></li>
+                    <li><a href="#">Trains</a></li>
+                    <li><a href="#">Restaurants</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2">
+                <h4>Special features</h4>
+                <ul class="colorlib-footer-links">
+                    <li><a href="#">Weather based suggestions</a></li>
+                    <li><a href="#">Give daywise plan for a location</a></li>
+                    <li><a href="#">Trip planner to give you places to visit of a particular location.</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-3 col-md-push-1">
+                <h4>Contact Information</h4>
+                <ul class="colorlib-footer-links">
+                    <li>IBM India Pvt Ltd, Ozone 2, SP Infocity <br> Fursungi , Pune , Maharashtra , IN 412308</li>
+                    <li><a href="tel://1234567920">+ 1235 2355 98</a></li>
+                    <li><a href="mailto:info@yoursite.com">yatraGuru.service@gmail.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy;
+                <script>document.write(new Date().getFullYear());</script> All rights reserved | YatraGuru </div>
+        </div>
+    </div>
+</footer>

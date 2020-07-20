@@ -1,0 +1,501 @@
+<div id="page">
+	<div class="topnav">
+		<a class="logo_img" href="#"><img src="../../assets/images/logo.png"></a>
+		<a *ngIf='!flag1' #signInModal data-toggle="modal" data-target="#signInModal">Sign In</a>
+		<a *ngIf='flag1' (click)='signout()'>Sign Out</a>
+		<a *ngIf='flag1' href="#"><img src="{{user[0].url}}" height="25px" width="25px"
+				style="border-radius: 15px;">&nbsp; {{user[0].name}}</a>
+		<a routerLink="/contact">Contact</a>
+		<a routerLink="/about">About</a>
+		<a (click)="planner()">Try Trip Planner</a>
+		<a class="active" href="#">Home</a>
+	</div>
+	<div class="modal fade" id='signInModal'>
+		<div class="modal-dialog">
+			<div class="modal-content" style="background-color: white;">
+				<button type="button" class="close" #closeModal data-dismiss="modal">&times;</button>
+				<h2>Login to yatraGuru</h2>
+				<button class="btn btn-default" (click)="signInWithGoogle()">Login With
+					<img src="http://transformations-spafitness.com/wp-content/uploads/2013/11/google-logo-icon-PNG-Transparent-Background-1-300x300.png"
+						height="25px" width="25px">
+				</button>
+				<button class="btn btn-default" (click)="signInWithFB()">Login With
+					<img src="../../assets/images/fb.png"
+						height="25px" width="25px">
+				</button>
+			</div>
+		</div>
+	</div>
+	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+		<!-- Indicators -->
+		<ol class="carousel-indicators">
+			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+			<li data-target="#myCarousel" data-slide-to="1"></li>
+			<li data-target="#myCarousel" data-slide-to="2"></li>
+			<li data-target="#myCarousel" data-slide-to="3"></li>
+		</ol>
+
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner">
+			<div class="item active">
+				<img src="../../assets/images/img_bg_2.jpg">
+				<div class="carousel-caption">
+					<h2>Plan you daywise tour with our</h2>
+					<h1>Trip Planner</h1>
+				</div>
+			</div>
+
+			<div class="item">
+				<img src="../../assets/images/img_bg_3.jpg">
+				<div class="carousel-caption">
+					<h2>We predict weather for you</h2>
+					<h1>Your Safety our Responsibilty</h1>
+				</div>
+			</div>
+
+			<div class="item">
+				<img src="../../assets/images/img_bg_5.jpg">
+				<div class="carousel-caption">
+					<h2>Explore the world with</h2>
+					<h1>YatraGuru</h1>
+				</div>
+			</div>
+			<div class="item">
+				<img src="../../assets/images/img_bg_4.jpg">
+				<div class="carousel-caption">
+					<h2>Experience the</h2>
+					<h1>Best Trip Ever</h1>
+				</div>
+			</div>
+		</div>
+
+		<!-- Left and right controls -->
+		<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+			<span class="glyphicon glyphicon-chevron-left"></span>
+			<span class="sr-only">Previous</span>
+		</a>
+		<a class="right carousel-control" href="#myCarousel" data-slide="next">
+			<span class="glyphicon glyphicon-chevron-right"></span>
+			<span class="sr-only">Next</span>
+		</a>
+	</div>
+
+	<div id="colorlib-reservation">
+		<!-- <div class="container"> -->
+		<div class="row">
+			<div class="search-wrap">
+				<div class="container">
+					<ul class="nav nav-tabs">
+						<li class="active"><a data-toggle="tab" href="#flight"><i class="flaticon-plane"></i> Flight</a>
+						</li>
+						<li><a data-toggle="tab" href="#train"><i class="fa fa-train" aria-hidden="true"></i> Train</a>
+						</li>
+						<li><a data-toggle="tab" href="#hotel"><i class="flaticon-resort"></i> Hotel</a></li>
+						<li><a data-toggle="tab" href="#restaurant"><i class="fa fa-cutlery" aria-hidden="true"></i>
+								Restaurant</a></li>
+					</ul>
+				</div>
+				<div class="tab-content">
+					<div id="flight" class="tab-pane fade in active">
+						<form #flightForm="ngForm" (submit)="actionFlight(flightForm.value)" ngNativeValidate
+							autocomplete="off" class="colorlib-form">
+							<div class="row">
+								<div class="col-md-2">
+									<label for="origin">From:</label>
+									<div class="form-field">
+										<input type="text" id="origin" class="form-control" list="airport"
+											placeholder="Search Location" name="origin"
+											(keyup)='flightChange(flightForm.value.origin)' ngModel required>
+										<datalist id="airport">
+											<option *ngFor="let air of airport" value="{{air}}"></option>
+										</datalist>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<label for="destination">To:</label>
+									<div class="form-field">
+										<input type="text" id="destination" class="form-control" list="airport"
+											placeholder="Search Location" class="form-control" name="destination"
+											(keyup)='flightChange(flightForm.value.destination)' ngModel required>
+										<datalist id="airport">
+											<option *ngFor="let air of airport" value="{{air}}"></option>
+										</datalist>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<label for="date">Departure Date:</label>
+									<div class="form-field">
+										<input type="date" id="date" class="form-control" placeholder="departure date"
+											name="date" ngModel required>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<label for="adults">Adults(12+ yrs):</label>
+									<div class="form-field">
+										<select id="adults" class="form-control" style="color:rgb(136, 133, 133)"
+											name="adults" ngModel required>
+											<option value=1 selected>1</option>
+											<option value=2>2</option>
+											<option value=3>3</option>
+											<option value=4>4</option>
+											<option value=5>5</option>
+											<option value=6>6</option>
+											<option value=7>7</option>
+											<option value=8>8</option>
+											<option value=9>9</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<label for="children">Children(2-12 yrs):</label>
+									<div class="form-field">
+										<select id="children" class="form-control" style="color:rgb(136, 133, 133)"
+											name="children" ngModel required>
+											<option value=0 selected>0</option>
+											<option value=1>1</option>
+											<option value=2>2</option>
+											<option value=3>3</option>
+											<option value=4>4</option>
+											<option value=5>5</option>
+											<option value=6>6</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<label for="infants">Infants(under 2 yrs):</label>
+									<div class="form-field">
+										<select id="infants" class="form-control" style="color:rgb(136, 133, 133)"
+											name="infants" ngModel required>
+											<option value=0 selected>0</option>
+											<option value=1>1</option>
+											<option value=2>2</option>
+											<option value=3>3</option>
+											<option value=4>4</option>
+											<option value=5>5</option>
+											<option value=6>6</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<label for="travelClass">Class:</label>
+									<div class="form-field">
+										<select id="travelClass" class="form-control" style="color:rgb(136, 133, 133)"
+											name="travelClass" ngModel required>
+											<option value="ECONOMY" selected>Economy</option>
+											<option value="BUSINESS">Business</option>
+											<option value="FIRST">First</option>
+											<option value="PREMIUM_ECONOMY">Premium Economy</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<input type="submit" name="submit" id="submit" value="Find Flights"
+										class="btn btn-primary btn-block">
+								</div>
+							</div>
+						</form>
+					</div>
+					<div id="train" class="tab-pane fade">
+						<form #trainForm="ngForm" (submit)="actionTrain(trainForm.value)" ngNativeValidate
+							autocomplete="off" class="colorlib-form">
+							<div class="row">
+								<div class="col-md-3">
+									<label for="origin">From:</label>
+									<div class="form-field">
+										<input type="text" id="origin" class="form-control" list="station"
+											(keyup)='trainChange(trainForm.value.origin)' placeholder="Search Location"
+											name="origin" ngModel required>
+										<datalist id="station">
+											<option *ngFor="let air of station" value="{{air}}"></option>
+										</datalist>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<label for="destination">To:</label>
+									<div class="form-field">
+										<input type="text" id="destination" class="form-control" list="station"
+											(keyup)='trainChange(trainForm.value.destination)'
+											placeholder="Search Location" class="form-control" name="destination"
+											ngModel required>
+										<datalist id="station">
+											<option *ngFor="let air of station" value="{{air}}"></option>
+										</datalist>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<label for="date">Departure Date:</label>
+									<div class="form-field">
+										<input type="date" id="date" class="form-control" placeholder="departure date"
+											name="date" ngModel required>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<input type="submit" name="submit" id="submit" value="Find Trains"
+										class="btn btn-primary btn-block">
+								</div>
+							</div>
+						</form>
+					</div>
+					<div id="hotel" class="tab-pane fade">
+						<form #hotelForm="ngForm" (submit)="actionHotel(hotelForm.value)" ngNativeValidate
+							autocomplete="off" class="colorlib-form">
+							<div class="row">
+								<div class="col-md-2">
+									<div class="booknow">
+										<h2>Search Now</h2>
+										<span>Best Hotels</span>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<label for="origin">Where:</label>
+									<div class="form-field">
+										<input type="text" id="origin" class="form-control" list="city"
+											(keyup)='cityChange(hotelForm.value.city)' placeholder="Search Location"
+											name="city" ngModel required>
+										<datalist id="city">
+											<option *ngFor="let air of city" value="{{air}}"></option>
+										</datalist>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<label for="date">Check-in Date:</label>
+									<div class="form-field">
+										<input type="date" id="date" class="form-control" name="inDate" ngModel
+											required>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<label for="date1">Check-out Date:</label>
+									<div class="form-field">
+										<input type="date" id="date1" class="form-control" name="outDate" ngModel
+											required>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<input type="submit" name="submit" id="submit" value="Find Hotels"
+										class="btn btn-primary btn-block">
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<div id="restaurant" class="tab-pane fade">
+						<form #resForm="ngForm" (submit)="actionRestaurant(resForm.value)" ngNativeValidate
+							autocomplete="off" class="colorlib-form">
+							<div class="row">
+								<div class="col-md-3">
+									<div class="booknow">
+										<h2>Search Now</h2>
+										<span>Best Restaurants in city</span>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<label for="origin">Where:</label>
+									<div class="form-field">
+										<input type="text" id="origin" class="form-control" list="city"
+											(keyup)='cityChange(resForm.value.city)' placeholder="Search Location"
+											name="city" ngModel required>
+										<datalist id="city">
+											<option *ngFor="let air of city" value="{{air}}"></option>
+										</datalist>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<label for="category">Category:</label>
+									<div class="form-field">
+										<select id="category" class="form-control" style="color:rgb(136, 133, 133)"
+											name="category" ngModel required>
+											<option value="Delivery" selected>Delivery</option>
+											<option value="Dine-out">Dine-out</option>
+											<option value="Nightlife">Nightlife</option>
+											<option value="Catching-up">Catching-up</option>
+											<option value="Takeaway">Takeaway</option>
+											<option value="Cafes">Cafes</option>
+											<option value="Daily Menus">Daily Menus</option>
+											<option value="Breakfast">Breakfast</option>
+											<option value="Lunch">Lunch</option>
+											<option value="Dinner">Dinner</option>
+											<option value="Pubs & Bars">Pubs & Bars</option>
+											<option value="Pocket Friendly Delivery">Pocket Friendly Delivery</option>
+											<option value="Clubs & Lounges">Clubs & Lounges</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<input type="submit" name="submit" id="submit" value="Find Restaurants"
+										class="btn btn-primary btn-block">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="colorlib-intro" class="intro-img" style="background-image: url(images/cover-img-1.jpg);"
+	data-stellar-background-ratio="0.5">
+	<div class="animate-box">
+		<img src="../../assets/images/corona.png" height="300px" style="margin-left: 10%;
+		margin-top: -5%;">
+	</div>
+
+</div>
+
+<div id="colorlib-intro" class="intro-img" style="background-image: url(../../assets/images/cover-img-1.jpg);">
+	<div class="overlay"></div>
+	<div class="intro-desc">
+		<div class="text-salebox">
+			<div class="text-rights" style="text-align: center;">
+				<h1 class="title" style="color: white;">Try our Trip Planner</h1>
+				<h4 style="color: white;">Get the stay and food options, places to visit, get your daywise schedule, get
+					weather alerts, get COVID-19 alerts for your <br>travel destination<br>
+				</h4>
+				<p><a (click)="planner()" class="btn btn-primary">Try Now</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="colorlib-tour colorlib-light-grey">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
+				<h2>Popular Destination</h2>
+				<p>“Never get so busy making a living that you forget to make a life.” </p>
+			</div>
+		</div>
+	</div>
+	<div class="tour-wrap">
+		<a href="#" class="tour-entry animate-box">
+			<div class="tour-img"
+				style="background-image: url(../../assets/images/paris.jfif); height:240px; width:300px">
+			</div>
+			<span class="desc">
+				<h2>Paris, France</h2>
+				<h6>Every day, the magnetic City of Light draws visitors who travel from around the globe to see
+					iconic attractions. </h6>
+			</span>
+		</a>
+		<a href="#" class="tour-entry animate-box">
+			<div class="tour-img"
+				style="background-image: url(../../assets/images/rome.jfif); height:240px; width:300px">
+			</div>
+			<span class="desc">
+				<h2>Rome, Italy</h2>
+				<h6>When you visit the Eternal City, prepare to cross a few must-see attractions, including the
+					Colosseum etc. </h6>
+			</span>
+		</a>
+		<a href="#" class="tour-entry animate-box">
+			<div class="tour-img"
+				style="background-image: url(../../assets/images/london.jfif); height:240px; width:300px">
+			</div>
+			<span class="desc">
+				<h2>London, England</h2>
+				<h6>The eclectic neighborhoods, which house a blend of historic landmarks and modern-day
+					attractions. </h6>
+			</span>
+		</a>
+		<a href="#" class="tour-entry animate-box">
+			<div class="tour-img"
+				style="background-image: url(../../assets/images/sydney.jfif); height:240px; width:300px">
+			</div>
+			<span class="desc">
+				<h2>Sydney, Australia</h2>
+				<h6>Sydney offers more than just a dizzying array of landmarks (the Sydney Opera House, Sydney
+					Harbour). </h6>
+			</span>
+		</a>
+		<a href="#" class="tour-entry animate-box">
+			<div class="tour-img"
+				style="background-image: url(../../assets/images/nyc.jfif); height:240px; width:300px">
+			</div>
+			<span class="desc">
+				<h2>New York City, USA</h2>
+				<h6>New York City hosts infinite urban adventures: You can wander through Central Park, tour the
+					exhibits at the Met etc. </h6>
+			</span>
+		</a>
+		<a href="#" class="tour-entry animate-box">
+			<div class="tour-img" style="background-image: url(../../assets/images/goa.jpg); height:240px; width:300px">
+			</div>
+			<span class="desc">
+				<h2>Goa, India</h2>
+				<h6>Offering so many adventure sports, forts and Portuguese churches, countless beaches, luxury
+					homestays in Goa, sea food. </h6>
+			</span>
+		</a>
+		<a href="#" class="tour-entry animate-box">
+			<div class="tour-img"
+				style="background-image: url(../../assets/images/shimla.jpg); height:240px; width:300px">
+			</div>
+			<span class="desc">
+				<h2>Shimla, India</h2>
+				<h6>Having served as the summer capital of the British era, Shimla in Himachal Pradesh is considered
+					to be the most famous retreats of all the best travel destinations in India. </h6>
+			</span>
+		</a>
+		<a href="#" class="tour-entry animate-box">
+			<div class="tour-img"
+				style="background-image: url(../../assets/images/amsterdam.jfif); height:240px; width:300px">
+			</div>
+			<span class="desc">
+				<h2>Amsterdam, Netherlands</h2>
+				<h6>Famous museums, tulips, canal-lined streets, "coffee shops" and high-end boutiques await you in
+					Amsterdam. </h6>
+			</span>
+		</a>
+
+	</div>
+</div>
+
+<footer id="colorlib-footer" role="contentinfo">
+	<div class="container">
+		<div class="row row-pb-md">
+			<div class="col-md-3 colorlib-widget">
+				<h4>YatraGuru</h4>
+				<p>Your yatra buddy. Get complete information for your tour with us. Plan your trip without any
+					difficulty.</p>
+				<ul class="colorlib-social-icons">
+					<li><a href="#"><i class="icon-twitter"></i></a></li>
+					<li><a href="#"><i class="icon-facebook"></i></a></li>
+					<li><a href="#"><i class="icon-linkedin"></i></a></li>
+					<li><a href="#"><i class="icon-dribbble"></i></a></li>
+				</ul>
+			</div>
+			<div class="col-md-2 colorlib-widget">
+				<h4>Search Now</h4>
+				<ul class="colorlib-footer-links">
+					<li><a href="#">Flights</a></li>
+					<li><a href="#">Hotels</a></li>
+					<li><a href="#">Trains</a></li>
+					<li><a href="#">Restaurants</a></li>
+				</ul>
+			</div>
+			<div class="col-md-2">
+				<h4>Special features</h4>
+				<ul class="colorlib-footer-links">
+					<li><a href="#">Weather based suggestions</a></li>
+					<li><a href="#">Give daywise plan for a location</a></li>
+					<li><a href="#">Trip planner to give you places to visit of a particular location.</a></li>
+				</ul>
+			</div>
+
+			<div class="col-md-3 col-md-push-1">
+				<h4>Contact Information</h4>
+				<ul class="colorlib-footer-links">
+					<li>IBM India Pvt Ltd, Ozone 2, SP Infocity <br> Fursungi , Pune , Maharashtra , IN 412308</li>
+					<li><a href="tel://1234567920">+ 1235 2355 98</a></li>
+					<li><a href="mailto:info@yoursite.com">yatraGuru.service@gmail.com</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+				Copyright &copy;
+				<script>document.write(new Date().getFullYear());</script> All rights reserved | YatraGuru </div>
+		</div>
+	</div>
+</footer>
